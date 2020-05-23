@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="<%=HTTP_ROOT%>/css/bootstrap.css">
+    <style media="screen">
+        .my-panel {
+            width: 80%;
+            position: absolute;
+            z-index: 100;
+            left: 50%;
+            top: 100px;
+            margin-left: -40%;
+            display: none;
+        }
+        
+        .my-panel-shadow {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background: #000;
+            opacity: 0.6;
+            z-index: 99;
+            display: none;
+        }
+        
+        .my-dialog {
+            width: 300px;
+            position: absolute;
+            z-index: 100;
+            left: 50%;
+            top: 200px;
+            margin-left: -150px;
+            display: none;
+        }
+        
+        .my-dialog-shadow {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background: #000;
+            opacity: 0.3;
+            z-index: 99;
+            display: none;
+        }
+        
+        .abc {
+            width: 100%;
+            height: 300px;
+            resize: none;
+        }
+        
+        .abc1 {
+            width: 100%;
+            height: 100px;
+            resize: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="my-panel-shadow"></div>
+    <div class="panel panel-default my-panel">
+        <div class="panel-heading">
+            <div class="panel-title">
+
+            </div>
+        </div>
+        <div class="panel-body">
+            <form class="form form-horizontal" action="<%=action%>" method="post" enctype="multipart/form-data">
+
+                <% fields.forEach(field=>{%>
+
+
+                    <div class="form-group">
+                        <%if(field.name!='content'&&field.name!='summary'&&field.type!='select'){      %>
+                            <label class="col-sm-2 control-label"><%=field.title%></label>
+                            <div class="col-sm-10">
+                                <input type="<%=field.type%>" class="form-control" name="<%=field.name%>" value="">
+                            </div>
+                            <%}%>
+                                <%if(field.type=='select'){ %>
+                                    <label class="col-sm-2 control-label"><%=field.title%></label>
+                                    <div class="col-sm-10">
+                                        <select name="<%=field.name%>" type="<%=field.type%>" class="form-control">
+                                            <%data1.forEach(data=>{%>
+                                                <option  name="<%=field.name%>" type="<%=field.type%>" class="form-control"><%=data.ID%></option>
+                                            <%})%>
+                                       
+                                    </select>
+                                    </div>
+
+                                    <%}%>
+
+                                        <%if(field.name=='summary'){ %>
+
+                                            <label class="col-sm-2 control-label"><%=field.title%></label>
+                                            <div class="col-sm-10">
+                                                <textarea class="abc1" type="<%=field.type%>" name="<%=field.name%>"></textarea>
+
+                                            </div>
+
+
+                                            <%}%>
+
+                                                <%if(field.name=='content'){ %>
+
+                                                    <label class="col-sm-2 control-label"><%=field.title%></label>
+                                                    <div class="col-sm-10">
+                                                        <textarea class="abc" type="<%=field.type%>" name="<%=field.name%>"></textarea>
+
+                                                    </div>
+
+                                                    <%}%>
+
+
+                    </div>
+                    <%})%>
+
+
+
+
+
+
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-2">
+                                <button type="submit" class="btn-primary form-control">提交</button>
+                            </div>
+                        </div>
+            </form>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <ul class="nav nav-tabs">
+        <li role="presentation"><a href="<%=HTTP_ROOT%>/admin/banner">banner管理</a></li>
+        <li role="presentation"><a href="<%=HTTP_ROOT%>/admin/catalog">类目管理</a></li>
+        <li role="presentation" class="active"><a href="<%=HTTP_ROOT%>/admin/article">文章管理</a></li>
+        <li role="presentation"><a href="<%=HTTP_ROOT%>/admin/users">用户管理</a></li>
+    </ul>
+    <!--表格-->
+
+    <a href="#" class="btn btn-primary glyphicon glyphicon-plus" id="btn_add">添加</a><a href="<%=HTTP_ROOT%>/admin/quit" class="btn btn-primary" style="margin-left: 1000px;color: red;">退出登录</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>标题</th>
+                <th>分类</th>
+                <th>图片</th>
+                <th>浏览量</th>
+                <th>评论量</th>
+                <th>发表时间</th>
+                <th>作者</th>
+                <th>描述</th>
+                <th>内容</th>
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <% datas.forEach(data=>{ %>
+                <tr>
+                    <td>
+                        <%=data.ID%>
+                    </td>
+                    <td>
+                        <%=data.title%>
+                    </td>
+                    <td>
+                        <%=data.catalog_ID%>
+                    </td>
+                    <td>
+                        <%=data.list_img_src %>
+                    </td>
+                    <td>
+                        <%=data.view %>
+                    </td>
+                    <td>
+                        <%=data.comment %>
+                    </td>
+                    <td>
+                        <%=data.created_time%>
+                    </td>
+                    <td>
+                        <%=data.author%>
+                    </td>
+                    <td style="max-width: 200px; word-break: break-all;">
+                        <%=data.summary%>
+                    </td>
+                    <td style="max-width: 400px; word-break: break-all;">
+                        <%=data.content%>
+                    </td>
+                    <td>
+                        <a href="<%=HTTP_ROOT%>/admin/article/delete/<%=data.ID%>" class="btn btn-danger glyphicon glyphicon-trash" onclick="return confirm('你是否真的确认要删除')">删除</a>
+
+
+                        <button onclick=window.location.href="<%=HTTP_ROOT%>/admin/article/modify/<%=data.ID%>" class="btn btn-default glyphicon glyphicon-pencil">修改</button>
+                    </td>
+                </tr>
+                <% }) %>
+        </tbody>
+    </table>
+    <script src="<%=HTTP_ROOT%>/js/jquery.min.js" charset="utf-8"></script>
+
+    <script>
+        $('#btn_add').click(function() {
+            $('.my-panel, .my-panel-shadow').show();
+        });
+    </script>
+
+
+
+</html>

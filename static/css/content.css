@@ -1,0 +1,17 @@
+.title {
+    font-size: 50px;
+    text-align: center;
+    margin-top: 50px;
+    font-style: italic;
+    height: auto;
+    width: 100%;
+    color: black;
+}
+
+.author {
+    text-align: right;
+    width: 100%;
+    height: auto;
+    margin-top: 30px;
+    color: cornflowerblue;
+}
